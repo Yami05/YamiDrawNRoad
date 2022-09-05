@@ -60,7 +60,7 @@ public class DrawManager : MonoBehaviour, IUndo
     {
         minim.Clear();
         car.transform.DOMove(transform.parent.position, 0.3f);
-        car.transform.DORotate(new Vector3(0, 90, 0), 0.3f);
+        car.transform.DORotate(carController.firstRot(), 0.3f);
         DOTween.Kill("Car");
         canMove = true;
     }

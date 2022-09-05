@@ -11,6 +11,8 @@ public class CarController : MonoBehaviour, IUndo
     private Rigidbody rb;
     private ObjectPool pool;
 
+    private Vector3 firstPos;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,7 +22,12 @@ public class CarController : MonoBehaviour, IUndo
         transform.DOShakeScale(0.2f, 0.07f, 8, 0).SetLoops(-1);
         GameEvents.Explode += Explode;
 
+        firstPos = transform.eulerAngles;
+
     }
+
+    public Vector3 firstRot() => firstPos;
+
 
     private void SetLine()
     {
@@ -68,9 +75,10 @@ public class CarController : MonoBehaviour, IUndo
     public void OnUndo()
     {
         Debug.Log(gameObject.name, gameObject);
+
         DOTween.Kill("Car");
         transform.DOMove(transform.parent.position, 0.3f);
-        transform.DORotate(new Vector3(0, 90, 0), 0.3f);
+        transform.DORotate(firstPos, 0.3f);
     }
 
 }

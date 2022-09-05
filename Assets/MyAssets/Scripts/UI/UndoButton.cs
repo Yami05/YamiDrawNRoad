@@ -8,9 +8,8 @@ public class UndoButton : Singleton<UndoButton>
 {
 
     [SerializeField] private Button button;
+
     public List<IUndo> actions = new List<IUndo>();
-
-
 
     private void Start()
     {
@@ -32,7 +31,6 @@ public class UndoButton : Singleton<UndoButton>
 
         actions[0].OnUndo();
         actions.Remove(actions[0]);
-        GameEvents.UndoForCollectables?.Invoke();
     }
 
 }
