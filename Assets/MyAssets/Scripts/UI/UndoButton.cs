@@ -6,31 +6,42 @@ using UnityEngine.UI;
 
 public class UndoButton : Singleton<UndoButton>
 {
-    private int count = 0;
 
     [SerializeField] private Button button;
-    [SerializeField] private List<Action> actions = new List<Action>();
+    public List<IUndo> actions = new List<IUndo>();
 
-    public List<Action> Actions { get => actions; set => actions = value; }
 
+    
     private void Start()
     {
         button.onClick.AddListener(Undo);
+        GameEvents.undoTest += OnUndo;
+    }
+
+    private void OnUndo(IUndo obj)
+    {
+        actions.Add(obj);
     }
 
     public void Undo()
     {
-
         if (actions.Count == 0)
         {
             return;
         }
 
-        Debug.Log(actions.Count);
-        Actions[count].Invoke();
-        count++;
+        actions[0].OnUndo();
+        actions.Remove(actions[0]);
     }
 
-    public int SetCount() => count = 0;
+    //public void AddCommand(IUndo undo)
+    //{
+    //    //if (actions.Count == 4)
+    //    //{
+    //    //    return;
+    //    //}
+    //    actions.Add(undo);
+    //}
+
 }
 

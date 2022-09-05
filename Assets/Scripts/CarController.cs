@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class CarController : MonoBehaviour
+public class CarController : MonoBehaviour, IUndo
 {
     [SerializeField] private ColorType carColor;
 
@@ -19,6 +19,7 @@ public class CarController : MonoBehaviour
         SetLine();
         transform.DOShakeScale(0.2f, 0.07f, 8, 0).SetLoops(-1);
         GameEvents.Explode += Explode;
+
     }
 
     private void SetLine()
@@ -29,17 +30,17 @@ public class CarController : MonoBehaviour
     }
 
 
-    public void CarPath(List<Vector3> vectors)
+    public void CarPath(List<Vector3> vectors, float time)
     {
-        transform.DOPath(vectors.ToArray(), vectors.Count * 0.15f).SetLookAt(lookAhead: 0).SetId("Car");
+        transform.DOPath(vectors.ToArray(), time).SetLookAt(lookAhead: 0).SetId("Car");
+        GameEvents.undoTest?.Invoke(this);
     }
 
-    public ColorType SetLineColor() => carColor;
+    public ColorType GetCarColor() => carColor;
 
     private void OnTriggerEnter(Collider other)
     {
         other.GetComponent<IInteract>()?.Interact(carColor);
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -63,6 +64,15 @@ public class CarController : MonoBehaviour
         cloud.transform.position = contact.point;
         pool.ReturnToPool(cloud, PoolItems.Crash, 2f);
     }
+
+    public void OnUndo()
+    {
+        Debug.Log(gameObject.name, gameObject);
+        DOTween.Kill("Car");
+        transform.DOMove(transform.parent.position, 0.3f);
+        transform.DORotate(new Vector3(0, 90, 0), 0.3f);
+    }
+
 }
 
 

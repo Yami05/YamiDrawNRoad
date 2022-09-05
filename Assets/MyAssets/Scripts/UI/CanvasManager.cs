@@ -4,7 +4,6 @@ public class CanvasManager : Singleton<CanvasManager>
 {
     [SerializeField] private Menu[] menus;
 
-
     private void Start()
     {
         GameEvents.GameOver += () => OpenMenu(MenuTag.Lose);

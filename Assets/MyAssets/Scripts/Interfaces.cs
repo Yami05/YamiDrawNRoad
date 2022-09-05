@@ -6,9 +6,9 @@ interface IInteract
     void Interact(ColorType type);
 }
 
-public interface ICommand
+public interface IUndo
 {
-    void Undo();
+    void OnUndo();
 }
 
 public class Interfaces : MonoBehaviour

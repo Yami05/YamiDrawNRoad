@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
-public class DrawManager : MonoBehaviour
+public class DrawManager : MonoBehaviour, IUndo
 {
     [SerializeField] private List<Vector3> drawPoints = new List<Vector3>();
     [SerializeField] private List<Vector3> minim = new List<Vector3>();
@@ -12,27 +13,24 @@ public class DrawManager : MonoBehaviour
     private MaterialManager materialManager;
     private CarController carController;
     private Camera cam;
-    private UndoButton undo;
-
-    private LayerMask layerMask;
 
     private bool canDraw;
     private bool canMove;
 
+    private LayerMask mask;
+
     private void Start()
     {
         materialManager = MaterialManager.instance;
-        undo = UndoButton.instance;
         cam = Camera.main;
 
         carController = car.GetComponent<CarController>();
         lineRenderer = GetComponent<LineRenderer>();
 
-        materialManager.SetColor(carController.SetLineColor(), lineRenderer.material);
-
-        layerMask = LayerMask.GetMask("Ground");
+        materialManager.SetColor(carController.GetCarColor(), lineRenderer.material);
 
         GameEvents.MoveTogether += FirstPosTogether;
+        mask = LayerMask.GetMask("Ground", "ParkSpot");
     }
 
     private void Update()
@@ -62,6 +60,7 @@ public class DrawManager : MonoBehaviour
     {
         minim.Clear();
         car.transform.DOMove(transform.parent.position, 0.3f);
+        car.transform.DORotate(new Vector3(0, 90, 0), 0.3f);
         DOTween.Kill("Car");
         canMove = true;
     }
@@ -72,7 +71,7 @@ public class DrawManager : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 60) && canDraw)
+        if (Physics.Raycast(ray, out hit, 60, mask) && canDraw)
         {
             Vector3 desiredPos = hit.point;
             desiredPos.y = transform.position.y;
@@ -82,7 +81,7 @@ public class DrawManager : MonoBehaviour
 
             if (hit.transform.gameObject.TryGetComponent<ParkSpot>(out ParkSpot spot))
             {
-                if (spot.GetColorType() == carController.SetLineColor())
+                if (spot.GetColorType() == carController.GetCarColor())
                 {
                     canDraw = false;
                 }
@@ -92,7 +91,6 @@ public class DrawManager : MonoBehaviour
 
     private void MinimIt()
     {
-
         for (int i = 1; i < drawPoints.Count; i++)
         {
             float dis = Vector3.Distance(drawPoints[i], drawPoints[i - 1]);
@@ -107,13 +105,23 @@ public class DrawManager : MonoBehaviour
     {
         if (canMove)
         {
-            carController.CarPath(minim);
-            undo.Actions.Add(GameEvents.MoveTogether);
-            undo.Actions.Add(ClearLists);
+            List<float> vs = new List<float>();
+
+            for (int i = 1; i < minim.Count; i++)
+            {
+                float dis = Vector3.Distance(minim[i], minim[i - 1]);
+                vs.Add(dis);
+            }
+
+            float a = vs.Sum();
+            carController.CarPath(minim, a / 6f);
             canMove = false;
-
-
+            GameEvents.undoTest?.Invoke(this);
         }
     }
 
+    public void OnUndo()
+    {
+        ClearLists();
+    }
 }

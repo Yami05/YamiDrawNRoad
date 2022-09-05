@@ -22,13 +22,13 @@ public class ParkSpot : MonoBehaviour, IInteract
         }
 
         GameEvents.MoveTogether += () => inside.SetActive(false);
+        GameEvents.UndoButton += () => inside.SetActive(false);
     }
 
     public void Interact(ColorType type)
     {
         if (type == colorType)
         {
-            Debug.Log("yeey");
             inside.SetActive(true);
             GameObject parkParticle = pool.GetFromPool(PoolItems.ParkSpot);
             parkParticle.transform.position = transform.position;
@@ -36,7 +36,6 @@ public class ParkSpot : MonoBehaviour, IInteract
             materialManager.SetColor(colorType, inside.GetComponent<MeshRenderer>().material);
         }
     }
-
 
     public ColorType GetColorType() => colorType;
 }
