@@ -9,7 +9,6 @@ public static class GameEvents
     public static Action<ColorType> StartMove;
     public static Action MoveTogether;
     public static Action<ContactPoint> Explode;
-    public static Action UndoButton;
     public static Action<IUndo> undoTest;
-
+    public static Action UndoForCollectables;
 }

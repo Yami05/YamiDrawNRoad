@@ -174,7 +174,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &4257525782321236648
 GameObject:
@@ -583,7 +583,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4259262
+        value: 0.7446149
         inSlope: 0
         outSlope: 0
         tangentMode: 0

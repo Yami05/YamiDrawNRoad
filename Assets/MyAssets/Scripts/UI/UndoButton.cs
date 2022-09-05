@@ -11,7 +11,7 @@ public class UndoButton : Singleton<UndoButton>
     public List<IUndo> actions = new List<IUndo>();
 
 
-    
+
     private void Start()
     {
         button.onClick.AddListener(Undo);
@@ -32,16 +32,8 @@ public class UndoButton : Singleton<UndoButton>
 
         actions[0].OnUndo();
         actions.Remove(actions[0]);
+        GameEvents.UndoForCollectables?.Invoke();
     }
-
-    //public void AddCommand(IUndo undo)
-    //{
-    //    //if (actions.Count == 4)
-    //    //{
-    //    //    return;
-    //    //}
-    //    actions.Add(undo);
-    //}
 
 }
 

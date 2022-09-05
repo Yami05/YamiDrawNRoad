@@ -6,16 +6,9 @@ public class StartPoint : MonoBehaviour
     [SerializeField] private Transform torus;
 
     private DrawManager drawManager;
-    private UndoButton undo;
-    private DrawManager manager;
-    private CarController carController;
 
     private void Start()
     {
-        undo = UndoButton.instance;
-        manager = transform.GetChild(0).GetComponent<DrawManager>();
-        carController = transform.GetChild(1).GetComponent<CarController>();
-
         drawManager = GetComponentInChildren<DrawManager>();
         torus.gameObject.SetActive(false);
         TorusMovement();
@@ -25,7 +18,8 @@ public class StartPoint : MonoBehaviour
     {
         drawManager.SetCanDraw();
         drawManager.ClearLists();
-        GameEvents.MoveTogether?.Invoke();  
+        GameEvents.MoveTogether?.Invoke();
+        GameEvents.UndoForCollectables.Invoke();
         torus.gameObject.SetActive(true);
     }
 
@@ -33,5 +27,4 @@ public class StartPoint : MonoBehaviour
     {
         torus.DOScale(torus.localScale / 2, 1f).SetLoops(-1, loopType: LoopType.Yoyo);
     }
-
 }

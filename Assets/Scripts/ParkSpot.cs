@@ -22,7 +22,7 @@ public class ParkSpot : MonoBehaviour, IInteract
         }
 
         GameEvents.MoveTogether += () => inside.SetActive(false);
-        GameEvents.UndoButton += () => inside.SetActive(false);
+        GameEvents.UndoForCollectables += () => inside.SetActive(false);
     }
 
     public void Interact(ColorType type)
