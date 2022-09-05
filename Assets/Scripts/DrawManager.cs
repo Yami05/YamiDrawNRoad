@@ -123,5 +123,6 @@ public class DrawManager : MonoBehaviour, IUndo
     public void OnUndo()
     {
         ClearLists();
+        GameEvents.UndoForCollectables?.Invoke();
     }
 }

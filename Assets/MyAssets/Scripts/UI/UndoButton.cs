@@ -31,6 +31,7 @@ public class UndoButton : Singleton<UndoButton>
 
         actions[0].OnUndo();
         actions.Remove(actions[0]);
+
     }
 
 }
