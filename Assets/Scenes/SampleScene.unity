@@ -512,8 +512,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6630473, g: 0.7720719, b: 0.9433962, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -569,7 +569,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
       propertyPath: pools.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
       propertyPath: pools.Array.data[1].items
@@ -578,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
       propertyPath: pools.Array.data[2].items
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
+      propertyPath: pools.Array.data[3].items
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
       propertyPath: pools.Array.data[0].prefab
@@ -591,6 +595,10 @@ PrefabInstance:
       propertyPath: pools.Array.data[2].prefab
       value: 
       objectReference: {fileID: 5798980849725973336, guid: f63415a0abdd3487aa9c3b43d419d520, type: 3}
+    - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
+      propertyPath: pools.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 1079417843959673577, guid: 4718226bbedc441dfb29b19f07fecb2a, type: 3}
     - target: {fileID: 8487820242008636642, guid: 062a326b9c3524694bff3ad1f691835c, type: 3}
       propertyPath: pools.Array.data[0].poolSize
       value: 1

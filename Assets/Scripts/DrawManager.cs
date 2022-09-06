@@ -13,6 +13,7 @@ public class DrawManager : MonoBehaviour, IUndo
     private MaterialManager materialManager;
     private CarController carController;
     private Camera cam;
+    private ObjectPool pool;
 
     private bool canDraw;
     private bool canMove;
@@ -22,15 +23,16 @@ public class DrawManager : MonoBehaviour, IUndo
     private void Start()
     {
         materialManager = MaterialManager.instance;
+        pool = ObjectPool.instance;
         cam = Camera.main;
+        GameEvents.MoveTogether += FirstPosTogether;
+        GameEvents.Win += SetWin;
 
         carController = car.GetComponent<CarController>();
         lineRenderer = GetComponent<LineRenderer>();
 
         materialManager.SetColor(carController.GetCarColor(), lineRenderer.material);
 
-        GameEvents.MoveTogether += FirstPosTogether;
-        GameEvents.Win += SetWin;
         mask = LayerMask.GetMask("Ground", "ParkSpot");
     }
 
@@ -77,10 +79,19 @@ public class DrawManager : MonoBehaviour, IUndo
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
+
+
         if (Physics.Raycast(ray, out hit, 60, mask) && canDraw)
         {
+
+            GameObject trail = pool.GetFromPool(PoolItems.Trail);
+            ParticleSystem particle = trail.GetComponent<ParticleSystem>();
+            particle.startColor = lineRenderer.material.color;
+            pool.ReturnToPool(trail, PoolItems.Trail, 0.3f);
+
             Vector3 desiredPos = hit.point;
             desiredPos.y = transform.position.y;
+            trail.transform.position = desiredPos;
             drawPoints.Add(desiredPos);
             lineRenderer.positionCount = drawPoints.Count;
             lineRenderer.SetPositions(drawPoints.ToArray());

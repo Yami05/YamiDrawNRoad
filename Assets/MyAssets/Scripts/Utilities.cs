@@ -5,6 +5,7 @@ public enum ColorType
 {
     Red,
     Blue,
+    yellow,
 }
 
 public enum PoolItems
@@ -12,6 +13,7 @@ public enum PoolItems
     ParkSpot,
     Crash,
     Coin,
+    Trail,
 }
 
 public enum AnimType

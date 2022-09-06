@@ -13,6 +13,9 @@ public class MaterialManager : Singleton<MaterialManager>
             case ColorType.Red:
                 material.color = Color.red;
                 break;
+            case ColorType.yellow:
+                material.color = Color.yellow;
+                break;
 
             default:
                 break;

@@ -264,7 +264,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1090219496289046380, guid: ccbe66ab9e45a4bf791d9a58b866d145, type: 3}
       propertyPath: colorType
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1028374853836946811, guid: ccbe66ab9e45a4bf791d9a58b866d145, type: 3}
       propertyPath: m_Layer
@@ -1318,7 +1318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3166333857801066912, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: carColor
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5357480355884080094, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_RootOrder

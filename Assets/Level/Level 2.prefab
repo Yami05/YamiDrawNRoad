@@ -336,6 +336,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7612731496776375483}
     m_Modifications:
+    - target: {fileID: -1090219496289046380, guid: ccbe66ab9e45a4bf791d9a58b866d145, type: 3}
+      propertyPath: colorType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1833026988279070497, guid: ccbe66ab9e45a4bf791d9a58b866d145, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -565,6 +569,10 @@ PrefabInstance:
     - target: {fileID: 2044006662132678182, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_Name
       value: StartPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 3166333857801066912, guid: 4b31d95f87e344af587dc73639769433, type: 3}
+      propertyPath: carColor
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5357480355884080094, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_RootOrder
