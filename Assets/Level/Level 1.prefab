@@ -1246,6 +1246,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartPoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3166333857801066912, guid: 4b31d95f87e344af587dc73639769433, type: 3}
+      propertyPath: carColor
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5357480355884080094, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1311,6 +1315,10 @@ PrefabInstance:
     - target: {fileID: 2044006662132678182, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_Name
       value: StartPoint (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3166333857801066912, guid: 4b31d95f87e344af587dc73639769433, type: 3}
+      propertyPath: carColor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5357480355884080094, guid: 4b31d95f87e344af587dc73639769433, type: 3}
       propertyPath: m_RootOrder

@@ -12,7 +12,6 @@ public class CanvasManager : Singleton<CanvasManager>
         GameEvents.Start += StartGame;
     }
 
-
     private void Gameover()
     {
         OpenMenu(MenuTag.Lose);

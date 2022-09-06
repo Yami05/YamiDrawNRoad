@@ -11,10 +11,14 @@ public class UndoButton : Singleton<UndoButton>
 
     public List<IUndo> actions = new List<IUndo>();
 
+
+    private bool canUndo = true;
+
     private void Start()
     {
         button.onClick.AddListener(Undo);
         GameEvents.undoTest += OnUndo;
+        GameEvents.Win += () => canUndo = false;
     }
 
     private void OnUndo(IUndo obj)
@@ -24,14 +28,19 @@ public class UndoButton : Singleton<UndoButton>
 
     public void Undo()
     {
-        if (actions.Count == 0)
+        if (canUndo)
         {
-            return;
+
+            if (actions.Count == 0)
+            {
+                return;
+            }
+
+            GameEvents.UndoForCollectables?.Invoke();
+            actions[0].OnUndo();
+            actions.Remove(actions[0]);
         }
 
-        GameEvents.UndoForCollectables?.Invoke();
-        actions[0].OnUndo();
-        actions.Remove(actions[0]);
 
     }
 

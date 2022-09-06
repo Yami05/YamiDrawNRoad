@@ -30,6 +30,7 @@ public class DrawManager : MonoBehaviour, IUndo
         materialManager.SetColor(carController.GetCarColor(), lineRenderer.material);
 
         GameEvents.MoveTogether += FirstPosTogether;
+        GameEvents.Win += SetWin;
         mask = LayerMask.GetMask("Ground", "ParkSpot");
     }
 
@@ -49,6 +50,13 @@ public class DrawManager : MonoBehaviour, IUndo
     }
 
     public bool SetCanDraw() => canDraw = true;
+
+
+    private void SetWin()
+    {
+        canDraw = false;
+        canMove = false;
+    }
 
     public void ClearLists()
     {
@@ -127,5 +135,6 @@ public class DrawManager : MonoBehaviour, IUndo
     private void OnDestroy()
     {
         GameEvents.MoveTogether -= FirstPosTogether;
+        GameEvents.Win -= SetWin;
     }
 }

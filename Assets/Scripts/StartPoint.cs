@@ -7,20 +7,27 @@ public class StartPoint : MonoBehaviour, IInteract
 
     private DrawManager drawManager;
 
+    private bool isDraw = true;
+
     private void Start()
     {
         drawManager = GetComponentInChildren<DrawManager>();
+        GameEvents.Win += () => isDraw = false;
         torus.gameObject.SetActive(false);
         TorusMovement();
     }
 
     private void OnMouseDown()
     {
-        drawManager.SetCanDraw();
-        drawManager.ClearLists();
-        GameEvents.MoveTogether?.Invoke();
-        GameEvents.UndoForCollectables.Invoke();
-        torus.gameObject.SetActive(true);
+        if (isDraw)
+        {
+            drawManager.SetCanDraw();
+            drawManager.ClearLists();
+            GameEvents.MoveTogether?.Invoke();
+            GameEvents.UndoForCollectables.Invoke();
+            torus.gameObject.SetActive(true);
+
+        }
     }
 
     private void TorusMovement()

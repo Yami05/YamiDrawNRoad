@@ -74,7 +74,6 @@ public class CarController : MonoBehaviour, IUndo
         cloud.transform.position = contact.point;
         pool.ReturnToPool(cloud, PoolItems.Crash, 2f);
         rb.constraints = RigidbodyConstraints.None;
-
     }
 
     public void OnUndo()
@@ -96,6 +95,7 @@ public class CarController : MonoBehaviour, IUndo
     private void OnDestroy()
     {
         GameEvents.Explode -= Explode;
+        GameEvents.CarMovement -= CarMovenet;
     }
 
 }
