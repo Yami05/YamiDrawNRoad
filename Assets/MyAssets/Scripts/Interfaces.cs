@@ -3,7 +3,7 @@ using System;
 
 interface IInteract
 {
-    void Interact(ColorType type);
+    void Interact(ColorType type, bool a);
 }
 
 public interface IUndo

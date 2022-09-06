@@ -11,4 +11,6 @@ public static class GameEvents
     public static Action<ContactPoint> Explode;
     public static Action<IUndo> undoTest;
     public static Action UndoForCollectables;
+    public static Action CarMovement;
+    public static Action WinCond;
 }

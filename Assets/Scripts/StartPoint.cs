@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class StartPoint : MonoBehaviour
+public class StartPoint : MonoBehaviour, IInteract
 {
     [SerializeField] private Transform torus;
 
@@ -26,5 +26,10 @@ public class StartPoint : MonoBehaviour
     private void TorusMovement()
     {
         torus.DOScale(torus.localScale / 2, 1f).SetLoops(-1, loopType: LoopType.Yoyo);
+    }
+
+    public void Interact(ColorType type, bool a)
+    {
+        a = false;
     }
 }

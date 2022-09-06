@@ -13,6 +13,8 @@ public class CarController : MonoBehaviour, IUndo
 
     private Vector3 firstPos;
 
+    private bool canCollect;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -21,13 +23,12 @@ public class CarController : MonoBehaviour, IUndo
         SetLine();
         transform.DOShakeScale(0.2f, 0.07f, 8, 0).SetLoops(-1);
         GameEvents.Explode += Explode;
+        GameEvents.CarMovement += CarMovenet;
 
         firstPos = transform.eulerAngles;
-
     }
 
     public Vector3 firstRot() => firstPos;
-
 
     private void SetLine()
     {
@@ -39,15 +40,17 @@ public class CarController : MonoBehaviour, IUndo
 
     public void CarPath(List<Vector3> vectors, float time)
     {
-        transform.DOPath(vectors.ToArray(), time).SetLookAt(lookAhead: 0).SetId("Car");
         GameEvents.undoTest?.Invoke(this);
+        transform.DOPath(vectors.ToArray(), time).SetLookAt(lookAhead: 0).SetId("Car").SetEase(Ease.Linear);
+        canCollect = true;
+
     }
 
     public ColorType GetCarColor() => carColor;
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IInteract>()?.Interact(carColor);
+        other.GetComponent<IInteract>()?.Interact(carColor, canCollect);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -70,15 +73,29 @@ public class CarController : MonoBehaviour, IUndo
         GameObject cloud = pool.GetFromPool(PoolItems.Crash);
         cloud.transform.position = contact.point;
         pool.ReturnToPool(cloud, PoolItems.Crash, 2f);
+        rb.constraints = RigidbodyConstraints.None;
+
     }
 
     public void OnUndo()
     {
-        Debug.Log(gameObject.name, gameObject);
+        GameEvents.CarMovement?.Invoke();
+    }
 
+    private void CarMovenet()
+    {
         DOTween.Kill("Car");
         transform.DOMove(transform.parent.position, 0.3f);
         transform.DORotate(firstPos, 0.3f);
+        canCollect = false;
+        rb.freezeRotation = true;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Explode -= Explode;
     }
 
 }

@@ -59,9 +59,7 @@ public class DrawManager : MonoBehaviour, IUndo
     private void FirstPosTogether()
     {
         minim.Clear();
-        car.transform.DOMove(transform.parent.position, 0.3f);
-        car.transform.DORotate(carController.firstRot(), 0.3f);
-        DOTween.Kill("Car");
+        carController.OnUndo();
         canMove = true;
     }
 
@@ -114,7 +112,7 @@ public class DrawManager : MonoBehaviour, IUndo
             }
 
             float a = vs.Sum();
-            carController.CarPath(minim, a / 6f);
+            carController.CarPath(minim, a / 10f);
             canMove = false;
             GameEvents.undoTest?.Invoke(this);
         }
@@ -123,6 +121,11 @@ public class DrawManager : MonoBehaviour, IUndo
     public void OnUndo()
     {
         ClearLists();
-        GameEvents.UndoForCollectables?.Invoke();
+    }
+
+
+    private void OnDestroy()
+    {
+        GameEvents.MoveTogether -= FirstPosTogether;
     }
 }

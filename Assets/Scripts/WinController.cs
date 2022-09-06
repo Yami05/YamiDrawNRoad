@@ -6,14 +6,15 @@ public class WinController : MonoBehaviour
 {
     private int winCounter;
 
-
-    private void counter(int a)
+    private void Start()
     {
-        winCounter = a;
+        GameEvents.WinCond += WinCheck;
+        GameEvents.UndoForCollectables += () => winCounter = 0;
     }
 
-    private void CheckIt()
+    private void WinCheck()
     {
+        winCounter++;
         if (winCounter == 2)
         {
             GameEvents.Win?.Invoke();

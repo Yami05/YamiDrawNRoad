@@ -21,14 +21,16 @@ public class ParkSpot : MonoBehaviour, IInteract
             materialManager.SetColor(colorType, renderers[i].material);
         }
 
-        GameEvents.MoveTogether += () => inside.SetActive(false);
-        GameEvents.UndoForCollectables += () => inside.SetActive(false);
+        GameEvents.MoveTogether += OnMoveTogether;
+        GameEvents.UndoForCollectables += UndoForCollectables;
+
     }
 
-    public void Interact(ColorType type)
+    public void Interact(ColorType type, bool a)
     {
         if (type == colorType)
         {
+            GameEvents.WinCond?.Invoke();
             inside.SetActive(true);
             GameObject parkParticle = pool.GetFromPool(PoolItems.ParkSpot);
             parkParticle.transform.position = transform.position;
@@ -38,4 +40,22 @@ public class ParkSpot : MonoBehaviour, IInteract
     }
 
     public ColorType GetColorType() => colorType;
+
+    private void OnMoveTogether()
+    {
+        inside.SetActive(false);
+    }
+
+    private void UndoForCollectables()
+    {
+        inside.SetActive(false);
+    }
+
+
+
+    private void OnDestroy()
+    {
+        GameEvents.MoveTogether -= OnMoveTogether;
+        GameEvents.UndoForCollectables -= UndoForCollectables;
+    }
 }

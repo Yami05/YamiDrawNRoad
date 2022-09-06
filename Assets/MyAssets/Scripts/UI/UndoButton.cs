@@ -29,6 +29,7 @@ public class UndoButton : Singleton<UndoButton>
             return;
         }
 
+        GameEvents.UndoForCollectables?.Invoke();
         actions[0].OnUndo();
         actions.Remove(actions[0]);
 

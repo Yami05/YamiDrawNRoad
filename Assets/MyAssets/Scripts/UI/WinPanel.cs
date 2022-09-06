@@ -13,6 +13,8 @@ public class WinPanel : MonoBehaviour
 
     private void NextLevel()
     {
+        Utilities.SetLevelPref();
+
         SceneManager.LoadScene(0);
     }
 }
